@@ -163,9 +163,7 @@ public class InterfaceUtilisateur {
     private static void afficherQuestionsDisponibles(List<Question> questions) {
         System.out.println("Liste des questions disponibles : ");
         for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).isDisponible()) {
                 System.out.println((i + 1) + ". " + questions.get(i).getEnonce());
-            }
         }
     }
 

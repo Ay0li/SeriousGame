@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,7 +33,7 @@ public class Defi {
         return question;
     }
 
-    public void setReponse(String reponse) {
+    public void setReponse(List<String> reponse) {
         this.question.setReponse(reponse);
     }
 
@@ -67,12 +68,12 @@ public class Defi {
                 String initiateurNom = donnees[1];
                 String adversaireNom = donnees[2];
                 String enonce = donnees[3];
-                String reponse = donnees[4];
+                List<String> reponse = Arrays.asList(donnees[4].split(";"));
                 int points = Integer.parseInt(donnees[5]);
 
-                Avatar initiateur = Avatar.chargerAvatar(initiateurNom);
-                Avatar adversaire = Avatar.chargerAvatar(adversaireNom);
-                Question question = new Question(enonce, reponse, points, true);
+                Avatar initiateur = Avatar.ChargerAvatarDefi(initiateurNom);
+                Avatar adversaire = Avatar.ChargerAvatarDefi(adversaireNom);
+                Question question = new Question(enonce, reponse, points);
                 Defi defi = new Defi(id, initiateur, adversaire, question);
                 defis.add(defi);
             }

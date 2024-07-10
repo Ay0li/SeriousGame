@@ -11,7 +11,7 @@ public class Avatar {
     public Avatar(int id, String nom) {
         this.id = id;
         this.nom = nom;
-        this.pointsDeVie = 0; // Points de vie initialisés à 0
+        this.pointsDeVie = 0;
     }
 
     private int calculerPointsDeVie(int[] notes) {
@@ -30,7 +30,7 @@ public class Avatar {
     public void decrementerPointsDeVie(int points) {
         this.pointsDeVie -= points;
         if (this.pointsDeVie < 0) {
-            this.pointsDeVie = 0; // S'assurer que les points de vie ne deviennent pas négatifs
+            this.pointsDeVie = 0;
         }
     }
 
@@ -45,7 +45,8 @@ public class Avatar {
             writer.append("\n");
         }
     }
-    public static Avatar chargerAvatar(String nom) throws IOException {
+    
+    public static Avatar ChargerAvatarDefi(String nom) throws IOException {
         File fichier = new File("Avatars.csv");
         if (!fichier.exists()) {
             fichier.createNewFile();
@@ -65,7 +66,7 @@ public class Avatar {
         return null;
     }
 
-    public static List<Avatar> chargerAvatars() throws IOException {
+    public static List<Avatar> ChargementAvatar() throws IOException {
         List<Avatar> avatars = new ArrayList<>();
         File fichier = new File("Avatars.csv");
         if (!fichier.exists()) {
@@ -93,7 +94,7 @@ public class Avatar {
         while (true) {
             try {
                 System.out.print("Entrez le nombre de notes : ");
-                nombreNotes = Integer.parseInt(scanner.nextLine()); // Utiliser nextLine pour éviter les problèmes de lecture
+                nombreNotes = Integer.parseInt(scanner.nextLine()); 
                 if (nombreNotes > 0) {
                     notes = new int[nombreNotes];
                     break;
@@ -115,10 +116,8 @@ public class Avatar {
                 }
             }
         }
-
         Avatar avatar = new Avatar(id, nom);
         avatar.pointsDeVie = avatar.calculerPointsDeVie(notes); // Calculer et attribuer les points de vie après la création
-
         try {
             avatar.sauvegarderAvatar();
         } catch (IOException e) {
@@ -155,7 +154,6 @@ public class Avatar {
         this.pointsDeVie = pointsDeVie;
     }
 
-    // Nouveau constructeur pour charger un avatar avec les points de vie
     public Avatar(int id, String nom, int pointsDeVie) {
         this.id = id;
         this.nom = nom;

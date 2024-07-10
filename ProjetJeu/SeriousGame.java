@@ -21,7 +21,7 @@ public class SeriousGame {
     }
 
     private static void chargerDonnees() throws IOException {
-        avatars = Avatar.chargerAvatars();
+        avatars = Avatar.ChargementAvatar();
         questions = Question.chargerQuestions();
         defis = Defi.chargerDefis();
     }
@@ -34,8 +34,7 @@ public class SeriousGame {
     }
 
     public static void lancerDefi(Avatar initiateur, Avatar adversaire, Question question) throws IOException {
-        question.setDisponible(false); // Rendre la question indisponible
-
+      
         int id = defis.size() + 1;
         Defi defi = new Defi(id, initiateur, adversaire, question);
         defis.add(defi);
@@ -44,7 +43,7 @@ public class SeriousGame {
         System.out.println("Défi lancé à " + adversaire.getNom() + " avec la question : " + question.getEnonce());
     }
 
-    public static void repondreDefi(Avatar avatar, Defi defi, String reponse) throws IOException {
+    public static void repondreDefi(Avatar avatar, Defi defi, List<String> reponse) throws IOException {
         defi.setReponse(reponse);
         defi.sauvegarderDefi();
 
