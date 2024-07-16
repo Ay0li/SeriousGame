@@ -8,11 +8,13 @@ public class Question {
     private String enonce;
     private List<String> reponse = new ArrayList<>();
     private int points;
+    private int bonnereponse;
 
-    public Question(String enonce, List<String> reponse, int points) {
+    public Question(String enonce, List<String> reponse, int points, int bonnereponse) {
         this.enonce = enonce;
         this.reponse = reponse;
         this.points = points;
+        this.bonnereponse = bonnereponse;
     }
 
     public String getEnonce() {
@@ -28,6 +30,11 @@ public class Question {
         return points;
     }
 
+    public int getBonneReponse() {
+        return bonnereponse;
+    }
+
+
     public void setReponse(List<String> reponse) {
         this.reponse = reponse;
     }
@@ -42,11 +49,18 @@ public class Question {
             reponses.add(scanner.nextLine());
         }
 
+        int bonnereponse = 0;
+        while (bonnereponse != 1 && bonnereponse != 2 && bonnereponse != 3 && bonnereponse != 4) {
+            System.out.print("Entrez le numéro de la Bonne réponse : ");
+            bonnereponse = scanner.nextInt();
+            scanner.nextLine();
+        }
+
         System.out.print("Entrez le nombre de points pour cette question : ");
         int points = scanner.nextInt();
         scanner.nextLine();
 
-        Question nouvelleQuestion = new Question(enonce, reponses, points);
+        Question nouvelleQuestion = new Question(enonce, reponses, points, bonnereponse);
 
         try {
             ajouterQuestion(nouvelleQuestion);
@@ -65,8 +79,8 @@ public class Question {
         try (FileWriter writer = new FileWriter(fichier, true)) {
             writer.append(question.getEnonce()).append(",")
                   .append(question.getReponse()).append(",")
-                  .append(Integer.toString(question.getPoints())).append("\n");
-        
+                  .append(Integer.toString(question.getPoints())).append(",")
+                  .append(Integer.toString(question.getBonneReponse())).append("\n");
         }
     }
 
@@ -82,12 +96,13 @@ public class Question {
             String ligne;
             while ((ligne = reader.readLine()) != null) {
                 String[] parties = ligne.split(",");
-                if (parties.length == 3) {
+                if (parties.length == 4) {
                     String enonce = parties[0];
                     String[] reponseslu = parties[1].split(";");
                     List<String> reponses = Arrays.asList(reponseslu);
                     int points = Integer.parseInt(parties[2]);
-                    questions.add(new Question(enonce, reponses, points));
+                    int bonnereponse = Integer.parseInt(parties[3]);
+                    questions.add(new Question(enonce, reponses, points, bonnereponse));
                 }
             }
         } catch (IOException e) {

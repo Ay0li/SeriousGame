@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -168,24 +169,32 @@ public class InterfaceUtilisateur {
     }
 
     private static void repondreDefi(Avatar avatar, List<Defi> defis) throws IOException {
+        if (defis.isEmpty()) {
+            System.out.println("Il n'y a pas de défis disponibles.");
+            return;
+        }
+    
         afficherDefisAdversaire(avatar, defis);
-
+    
         System.out.print("Sélectionnez le défi par numéro : ");
         int choix = scanner.nextInt();
         scanner.nextLine(); // Pour consommer le newline restant après nextInt()
-
+    
         if (choix < 1 || choix > defis.size()) {
             System.out.println("Choix invalide.");
             return;
         }
-
+    
         Defi defi = defis.get(choix - 1);
-
+    
         System.out.print("Entrez votre réponse : ");
         String reponse = scanner.nextLine();
-
-        SeriousGame.repondreDefi(avatar, defi, reponse);
+        List<String> reponses = new ArrayList<>();
+        reponses.add(reponse);
+    
+        SeriousGame.repondreDefi(avatar, defi, reponses);
     }
+    
 
     private static void afficherDefisAdversaire(Avatar avatar, List<Defi> defis) {
         System.out.println(avatar.getNom() + " répond à un défi.");

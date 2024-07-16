@@ -43,9 +43,10 @@ public class Defi {
         File fichier = new File("Defis.csv");
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(fichier, true))) {
-            writer.println(String.format("%d,%s,%s,%s,%s,%d",
+            writer.println(String.format("%d,%s,%s,%s,%s,%d,%d",
                     id, initiateur.getNom(), adversaire.getNom(),
-                    question.getEnonce(), question.getReponse(), question.getPoints()));
+                    question.getEnonce(), question.getReponse(),
+                    question.getPoints(), question.getBonneReponse()));
         } catch (IOException e) {
             System.err.println("Erreur lors de la sauvegarde du défi : " + e.getMessage());
         }
@@ -70,10 +71,11 @@ public class Defi {
                 String enonce = donnees[3];
                 List<String> reponse = Arrays.asList(donnees[4].split(";"));
                 int points = Integer.parseInt(donnees[5]);
+                int bonnereponse = Integer.parseInt(donnees[6]);
 
                 Avatar initiateur = Avatar.ChargerAvatarDefi(initiateurNom);
                 Avatar adversaire = Avatar.ChargerAvatarDefi(adversaireNom);
-                Question question = new Question(enonce, reponse, points);
+                Question question = new Question(enonce, reponse, points, bonnereponse);
                 Defi defi = new Defi(id, initiateur, adversaire, question);
                 defis.add(defi);
             }
@@ -94,7 +96,7 @@ public class Defi {
                 if (fichierCree) {
                     System.out.println("Le fichier " + nomFichier + " a été créé avec succès.");
                 } else {
-                    System.out.println("Le fichier " + nomFichier + " n'a pas pu être créé.");
+                    System.out.println("Le fichier " + nomFichier + "n'a pas pu être créé.");
                 }
             }
         } catch (IOException e) {

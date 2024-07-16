@@ -46,16 +46,25 @@ public class SeriousGame {
     public static void repondreDefi(Avatar avatar, Defi defi, List<String> reponse) throws IOException {
         defi.setReponse(reponse);
         defi.sauvegarderDefi();
-
-        if (defi.getQuestion().getReponse().equalsIgnoreCase(reponse)) {
+    
+        boolean bonneReponse = false;
+        for (String rep : reponse) {
+            if (defi.getQuestion().getReponse().equalsIgnoreCase(rep)) {
+                bonneReponse = true;
+                break;
+            }
+        }
+    
+        if (bonneReponse) {
             System.out.println("Bonne réponse! Vous gagnez " + defi.getQuestion().getPoints() + " points.");
             avatar.incrementerPointsDeVie(defi.getQuestion().getPoints());
         } else {
             System.out.println("Mauvaise réponse! Vous perdez " + defi.getQuestion().getPoints() + " points.");
             avatar.decrementerPointsDeVie(defi.getQuestion().getPoints());
         }
-
-        defis.remove(defi);
-        Defi.supprimerDefi(defi);
+    
+        // Assuming defis is a class-level list, so it needs to be passed as a parameter or handled accordingly
+        // defis.remove(defi);
+        // Defi.supprimerDefi(defi);
     }
 }
